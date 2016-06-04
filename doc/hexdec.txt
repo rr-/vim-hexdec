@@ -16,5 +16,9 @@ Call :Dec2hex 15 to see value of 15 as hexadecimal number, without any replacing
 
 Reverse of :Dec2hex.
 
-Github repository: http://github.com/rr-/vim-hexdec
-Based on: http://vim.wikia.com/wiki/Convert_between_hex_and_decimal
+Github repository:
+    http://github.com/rr-/vim-hexdec
+
+Based on:
+    http://vim.wikia.com/wiki/Convert_between_hex_and_decimal
+    http://stackoverflow.com/questions/857070/
