@@ -6,7 +6,9 @@ and vice versa by exposing following functions:
 - `:Hex2dec`
 - `:Dec2hex`
 
-The functions work for visual selection as well.
+The functions work for visual selection, block selection, line ranges and the
+whole buffer. You can also convert the numbers without changing the file by
+passing additional argument as in `:Hex2dec 0xdeadbeef`.
 
 The plugin doesn't define any bindings and leaves the choice to the user.
 

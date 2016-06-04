@@ -7,11 +7,14 @@ v-block).
 
                                                 *Dec2hex*
 
-Call :Dec2hex to convert decimal to hexadecimal.
+Call :Dec2hex to convert numbers in the current line.
+Call :1,3Dec2hex to convert all decimal numbers in lines 1 to 3.
+Call :%Dec2hex to convert all decimal numbers in the current buffer.
+Call :Dec2hex 15 to see value of 15 as hexadecimal number, without any replacing.
 
                                                 *Hex2dec*
 
-Call :Hex2dec to convert hexadecimal to decimal.
+Reverse of :Dec2hex.
 
 Github repository: http://github.com/rr-/vim-hexdec
 Based on: http://vim.wikia.com/wiki/Convert_between_hex_and_decimal
