@@ -15,6 +15,10 @@ whole buffer. You can also convert the numbers without changing the file by
 passing additional argument as in `:Hex2dec 0xdeadbeef`. Conversion should work
 for arbitrary positive integers.
 
+## Demo
+
+![GIF animation](https://cloud.githubusercontent.com/assets/1045476/15802614/490d8b4e-2ab8-11e6-9129-f234398967c3.gif)
+
 ## Bindings
 
 The plugin doesn't define any bindings and leaves the choice to the user.
