@@ -1,0 +1,17 @@
+hexdec.txt* hexdec
+
+
+This plugin convers hexadecimal numbers under cursor to their decimal
+counterparts and vice versa. Also works within visual selection (v-line and
+v-block).
+
+                                                *Dec2hex*
+
+Call :Dec2hex to convert decimal to hexadecimal.
+
+                                                *Hex2dec*
+
+Call :Hex2dec to convert hexadecimal to decimal.
+
+Github repository: http://github.com/rr-/vim-hexdec
+Based on: http://vim.wikia.com/wiki/Convert_between_hex_and_decimal
