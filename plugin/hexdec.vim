@@ -33,7 +33,7 @@ function! s:ConvertBase(string, source_base, target_base)
   return join(output, '')
 endfunction
 
-command! -nargs=? -range Dec2hex call s:Dec2hex(<line1>, <line2>, '<args>')
+command! -nargs=? -range Dec2Hex call s:Dec2hex(<line1>, <line2>, '<args>')
 function! s:Dec2hex(line1, line2, arg) range
   if empty(a:arg)
     if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
@@ -51,7 +51,7 @@ function! s:Dec2hex(line1, line2, arg) range
   endif
 endfunction
 
-command! -nargs=? -range Hex2dec call s:Hex2dec(<line1>, <line2>, '<args>')
+command! -nargs=? -range Hex2Dec call s:Hex2dec(<line1>, <line2>, '<args>')
 function! s:Hex2dec(line1, line2, arg) range
   if empty(a:arg)
     if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
@@ -68,4 +68,12 @@ function! s:Hex2dec(line1, line2, arg) range
     let tmp = substitute(a:arg, '^0x', '', 'i')
     echo s:ConvertBase(tmp, 16, 10)
   endif
+endfunction
+
+function! Hex2Dec(val)
+  return s:ConvertBase(a:val, 16, 10)
+endfunction
+
+function! Dec2Hex(val)
+  return s:ConvertBase(a:val, 10, 16)
 endfunction
