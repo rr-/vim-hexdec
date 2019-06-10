@@ -7,12 +7,12 @@ A small number base conversion script for Vim.
 This vim plugin lets you convert hexadecimal numbers to decimal counterparts
 and vice versa by exposing following functions:
 
-- `:Hex2dec`
-- `:Dec2hex`
+- `:Hex2Dec`
+- `:Dec2Hex`
 
 The functions work for visual selection, block selection, line ranges and the
 whole buffer. You can also convert the numbers without changing the file by
-passing additional argument as in `:Hex2dec 0xdeadbeef`. Conversion should work
+passing additional argument as in `:Hex2Dec 0xdeadbeef`. Conversion should work
 for arbitrary positive integers.
 
 ## Demo
@@ -24,8 +24,8 @@ for arbitrary positive integers.
 The plugin doesn't define any bindings and leaves the choice to the user.
 Here's a demonstration how to bind the commands in the `.vimrc` file:
 
-    nnoremap gbh :Dec2hex<CR>
-    nnoremap gbd :Hex2dec<CR>
+    nnoremap gbh :Dec2Hex<CR>
+    nnoremap gbd :Hex2Dec<CR>
 
 ## Installation
 

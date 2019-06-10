@@ -5,16 +5,16 @@ This plugin convers hexadecimal numbers under cursor to their decimal
 counterparts and vice versa. Also works within visual selection (v-line and
 v-block).
 
-                                                *Dec2hex*
+                                                *Dec2Hex*
 
-Call :Dec2hex to convert numbers in the current line.
-Call :1,3Dec2hex to convert all decimal numbers in lines 1 to 3.
-Call :%Dec2hex to convert all decimal numbers in the current buffer.
-Call :Dec2hex 15 to see value of 15 as hexadecimal number, without any replacing.
+Call :Dec2Hex to convert numbers in the current line.
+Call :1,3Dec2Hex to convert all decimal numbers in lines 1 to 3.
+Call :%Dec2Hex to convert all decimal numbers in the current buffer.
+Call :Dec2Hex 15 to see value of 15 as hexadecimal number, without any replacing.
 
-                                                *Hex2dec*
+                                                *Hex2Dec*
 
-Reverse of :Dec2hex.
+Reverse of :Dec2Hex.
 
 Github repository:
     http://github.com/rr-/vim-hexdec
