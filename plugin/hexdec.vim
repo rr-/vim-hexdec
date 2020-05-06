@@ -77,3 +77,30 @@ endfunction
 function! Dec2Hex(val)
   return s:ConvertBase(a:val, 10, 16)
 endfunction
+
+command! -nargs=? -range ToggleHexDec call s:ToggleHexDec(<line1>, <line2>, '<args>')
+function! s:ToggleHexDec(line1, line2, arg) range
+  if empty(a:arg)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
+    else
+      let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
+    endif
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+        let cmd = 's/\%V\(0x\)\?\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(2), 16, 10))/g'
+      else
+        let cmd = 's/\(0x\)\?\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(2), 16, 10))/g'
+      endif
+      try
+        execute a:line1 . ',' . a:line2 . cmd
+      catch
+        echo 'Error: No hexadecimal or decimal number found'
+      endtry
+    endtry
+  else
+    echo 'ToggleHexDec doesn\'t support arguments'
+  endif
+endfunction

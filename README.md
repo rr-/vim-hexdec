@@ -9,6 +9,7 @@ and vice versa by exposing following functions:
 
 - `:Hex2Dec`
 - `:Dec2Hex`
+- `:ToggleHexDec`
 
 The functions work for visual selection, block selection, line ranges and the
 whole buffer. You can also convert the numbers without changing the file by
@@ -26,6 +27,7 @@ Here's a demonstration how to bind the commands in the `.vimrc` file:
 
     nnoremap gbh :Dec2Hex<CR>
     nnoremap gbd :Hex2Dec<CR>
+    nnoremap gbt :ToggleHexDec<CR>
 
 ## Installation
 
