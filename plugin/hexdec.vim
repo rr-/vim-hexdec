@@ -55,14 +55,14 @@ command! -nargs=? -range Hex2Dec call s:Hex2dec(<line1>, <line2>, '<args>')
 function! s:Hex2dec(line1, line2, arg) range
   if empty(a:arg)
     if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V0x\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
+      let cmd = 's/\%V\(0x\)\?\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
     else
-      let cmd = 's/0x\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
+      let cmd = 's/\(0x\)\?\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
     endif
     try
       execute a:line1 . ',' . a:line2 . cmd
     catch
-      echo 'Error: No hex number starting "0x" found'
+      echo 'Error: No hex number found'
     endtry
   else
     let tmp = substitute(a:arg, '^0x', '', 'i')
