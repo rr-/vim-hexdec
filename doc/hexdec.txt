@@ -12,6 +12,10 @@ Call :1,3Dec2Hex to convert all decimal numbers in lines 1 to 3.
 Call :%Dec2Hex to convert all decimal numbers in the current buffer.
 Call :Dec2Hex 15 to see value of 15 as hexadecimal number, without any replacing.
 
+                                                *Dec2Hexl*
+
+It is like :Dec2Hex but prints hexadecimal numbers in lowercase.
+
                                                 *Hex2Dec*
 
 Reverse of :Dec2Hex.
