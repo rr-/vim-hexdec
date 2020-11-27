@@ -16,7 +16,7 @@ function! s:AddDecValue(hex_array, value, source_base, target_base)
   endwhile
 endfunction
 
-function! s:ConvertBase(string, source_base, target_base)
+function! s:ConvertBase(string, source_base, target_base, lower)
   let input = split(toupper(a:string), '.\zs')
   let output = repeat(['0'], len(input) * 2)
   for digit in input
@@ -30,35 +30,49 @@ function! s:ConvertBase(string, source_base, target_base)
   while len(output) > 1 && output[0] == '0'
     let output = output[1:]
   endwhile
-  return join(output, '')
+  if a:lower == 1
+    return tolower(join(output, ''))
+  else
+    return join(output, '')
+  endif
+endfunction
+
+function! s:CheckDec(lower)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' .  a:lower . '))/g'
+    else
+      let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' . a:lower . '))/g'
+    endif
+    return cmd
+endfunction
+
+function! s:CheckHex()
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
+    else
+      let cmd = 's/\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
+    endif
+    return cmd
 endfunction
 
 command! -nargs=? -range Dec2Hex call s:Dec2hex(<line1>, <line2>, '<args>')
 function! s:Dec2hex(line1, line2, arg) range
   if empty(a:arg)
-    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
-    else
-      let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
-    endif
+    let cmd = s:CheckDec(0)
     try
       execute a:line1 . ',' . a:line2 . cmd
     catch
       echo 'Error: No decimal number found'
     endtry
   else
-    echo '0x' . s:ConvertBase(a:arg, 10, 16)
+    echo '0x' . s:ConvertBase(a:arg, 10, 16, 0)
   endif
 endfunction
 
 command! -nargs=? -range Hex2Dec call s:Hex2dec(<line1>, <line2>, '<args>')
 function! s:Hex2dec(line1, line2, arg) range
   if empty(a:arg)
-    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
-    else
-      let cmd = 's/\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10))/g'
-    endif
+    let cmd = s:CheckHex()
     try
       execute a:line1 . ',' . a:line2 . cmd
     catch
@@ -66,34 +80,44 @@ function! s:Hex2dec(line1, line2, arg) range
     endtry
   else
     let tmp = substitute(a:arg, '^0x', '', 'i')
-    echo s:ConvertBase(tmp, 16, 10)
+    echo s:ConvertBase(tmp, 16, 10, 0)
+  endif
+endfunction
+
+command! -nargs=? -range Dec2Hexl call s:Dec2hexl(<line1>, <line2>, '<args>')
+function! s:Dec2hexl(line1, line2, arg) range
+  if empty(a:arg)
+    let cmd = s:CheckDec(1)
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      echo 'Error: No decimal number found'
+    endtry
+  else
+    echo '0x' . s:ConvertBase(a:arg, 10, 16, 1)
   endif
 endfunction
 
 function! Hex2Dec(val)
-  return s:ConvertBase(a:val, 16, 10)
+  return s:ConvertBase(a:val, 16, 10, 0)
 endfunction
 
 function! Dec2Hex(val)
-  return s:ConvertBase(a:val, 10, 16)
+  return s:ConvertBase(a:val, 10, 16, 0)
+endfunction
+
+function! Dec2Hexl(val)
+  return s:ConvertBase(a:val, 10, 16, 1)
 endfunction
 
 command! -nargs=? -range ToggleHexDec call s:ToggleHexDec(<line1>, <line2>, '<args>')
 function! s:ToggleHexDec(line1, line2, arg) range
   if empty(a:arg)
-    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
-    else
-      let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16))/g'
-    endif
+    let cmd = s:CheckDec(0)
     try
       execute a:line1 . ',' . a:line2 . cmd
     catch
-      if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-        let cmd = 's/\%V\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(2), 16, 10))/g'
-      else
-        let cmd = 's/\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(2), 16, 10))/g'
-      endif
+      let cmd = s:CheckHex()
       try
         execute a:line1 . ',' . a:line2 . cmd
       catch
@@ -101,6 +125,6 @@ function! s:ToggleHexDec(line1, line2, arg) range
       endtry
     endtry
   else
-    echo 'ToggleHexDec doesn\'t support arguments'
+    echo 'ToggleHexDec does not support arguments'
   endif
 endfunction
