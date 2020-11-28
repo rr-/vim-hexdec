@@ -38,21 +38,21 @@ function! s:ConvertBase(string, source_base, target_base, lower)
 endfunction
 
 function! s:CheckDec(lower)
-    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' .  a:lower . '))/g'
-    else
-      let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' . a:lower . '))/g'
-    endif
-    return cmd
+  if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+    let cmd = 's/\%V\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' .  a:lower . '))/g'
+  else
+    let cmd = 's/\<\d\+\>/\=printf("0x%s",s:ConvertBase(submatch(0), 10, 16, ' . a:lower . '))/g'
+  endif
+  return cmd
 endfunction
 
 function! s:CheckHex()
-    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
-      let cmd = 's/\%V\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
-    else
-      let cmd = 's/\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
-    endif
-    return cmd
+  if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+    let cmd = 's/\%V\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
+  else
+    let cmd = 's/\(0x\)\(\x\+\)/\=printf("%s",s:ConvertBase(submatch(1), 16, 10, 0))/g'
+  endif
+  return cmd
 endfunction
 
 command! -nargs=? -range Dec2Hex call s:Dec2hex(<line1>, <line2>, '<args>')
