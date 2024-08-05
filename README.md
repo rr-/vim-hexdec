@@ -1,6 +1,6 @@
 # vim-hexdec
 
-A small number base conversion script for Vim.
+A small number base conversion script for Neovim.
 
 ## Description
 
@@ -13,13 +13,7 @@ and vice versa by exposing following functions:
 - `:ToggleHexDec`
 
 The functions work for visual selection, block selection, line ranges and the
-whole buffer. You can also convert the numbers without changing the file by
-passing additional argument as in `:Hex2Dec 0xdeadbeef`. Conversion should work
-for arbitrary positive integers.
-
-## Demo
-
-![GIF animation](https://cloud.githubusercontent.com/assets/1045476/15802614/490d8b4e-2ab8-11e6-9129-f234398967c3.gif)
+whole buffer. Conversion should work for arbitrary positive integers.
 
 ## Bindings
 
